@@ -1,11 +1,9 @@
-from openpyxl import Workbook
 from openpyxl import load_workbook
 
-# WARNING: THIS TOOL IS NOT STABLE SO DON'T RUN IT ON ANYTHING OF WHICH YOU DON'T HAVE A BACKUP.
+# NOTE: Rows in the warning message are referring to the rows from the original file, not the newly formatted one
+# NOTE: Excel file to be targeted has to be in the same file from which this python program is being run
 
-# NOTE: Rows in the warning message are referring to the rows from the original file, not the new formatted one
-
-# Tool to make liv's job a little bit easier
+# Tool to make excel formatting/sorting a little bit easier
 #  - Formats names so the first letter is Capped and the rest aren't
 #  - removes rows of people who have names that are already in the worksheet
 #      - This checks for people with the same name from different companies. If there are people with the same exact
@@ -23,14 +21,6 @@ company_index = input("What's the column index of Company Name? (A = 1 etc.): ")
 # open that file and call it "source" (don't save over this one)
 source_wb = load_workbook(source_file_name + ".xlsx")
 source_sheet = source_wb.active
-
-# gets all the first names and formats them
-# for row in source_sheet.iter_rows(values_only=True):
-#    print(str(row[int(first_name_index]).capitalize())
-
-# gets the headers
-# for value in source_sheet.iter_rows(min_row=1, max_row=1, values_only=True):
-#    print(value)
 
 # create a dictionary to store name:company pairs
 names_and_companies = {}
@@ -74,4 +64,5 @@ rows_to_be_deleted.sort(reverse=True)
 for rownum in rows_to_be_deleted:
     source_sheet.delete_rows(rownum)
 
+# this creates a new fil with the original file's name + an extension
 source_wb.save(filename=source_file_name + "-formatted.xlsx")
